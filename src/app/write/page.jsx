@@ -10,10 +10,7 @@ import { useSession } from "next-auth/react"
 
 const WritePage = () => {
     const {status} = useSession(); 
-    const router = useRouter(); 
-
-    
-    
+    const router  = useRouter();
     
     
     const [open, setOpen] = useState(false);
@@ -22,7 +19,7 @@ const WritePage = () => {
         router.push("/")
     }
     if (status==="loading"){
-        return <div className="{styles.loading}">Loading...</div>
+         <div className="{styles.loading}">Loading...</div>
     }
     if (status==="authenticated"){
         router.push("/")

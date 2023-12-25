@@ -8,7 +8,7 @@ const getData = async ()=>{
     cache:"no-store",
   });
   if (!res.ok){
-    throw new Error("Failed")
+    throw new Error("Failed");
   }
 
   return res.json();
@@ -23,7 +23,7 @@ const CategoryList = async () => {
           {data?.map((item) =>(
 
            <Link
-            href="/blog?cat=new"
+            href={`/blog?cat=${item.slug}`}
             className={`${styles.category} ${styles[item.slug]}`}
             key = {item._id}
           >
