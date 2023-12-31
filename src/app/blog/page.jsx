@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from "./blogPage.module.css"
 import CardList from '../components/CardList/CardList'
-import Menu from '../components/Menu/Menu'
+import Menu from '@/app/components/Menu/Menu'
 
 const BlogPage = ({searchParams}) => {
 

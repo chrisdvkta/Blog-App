@@ -1,10 +1,31 @@
+"use client"
+
 import React from 'react'
 import styles from "./comments.module.css"
 import Link from 'next/link'
 import Image from 'next/image';
+import useSWR from 'swr';
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 
-const Comments = () => {
-    const status = "authenticated";
+const fetcher = async (url) =>{
+    const res= await fetch(url);
+    const data = await res.json();
+
+    if(!res.ok){
+        throw new Error(data.message);
+    }
+    return data; 
+}
+
+const Comments = ({postSlug}) => {
+    
+    const {status} = useSession(); 
+
+    const {data, isLoading} = useSWR(`http://localhost:3000/api/comments?postSlug=${postSlug}`
+    , fetcher)
+    console.log(data);
+
   return (
     <div className={styles.container}>
         <h1 className={styles.title}>Comments</h1>
@@ -14,20 +35,25 @@ const Comments = () => {
                 <button className={styles.button}>Send</button>
             </div>
         ):(
-        <Link href = "/login"> Login to write comments</Link>
+        <Link href = "/login"> Login to write</Link>
 
         )}
         <div className={styles.comments}>
-            <div className={styles.comment}>
+        {isLoading ? "Loading":
+        data?.map((item)=>(
+            <div className={styles.comment} key ={item._id}>
                 <div className={styles.user}>
-                    <Image src = "/p1.jpeg" width={50} height = {50} className={styles.image}/>
+                {item?.user?.image &&
+                    <Image src ={item.user.image} width={50} height = {50} className={styles.image}/>
+                }
                     <div className={styles.userInfo}>
-                        <span>Chris Rock</span>
-                        <span>1.02.2023</span>
+                        <span>{item.user.name}</span>
+                        <span>{item.createdAt}</span>
                     </div>
                 </div>
-             <p className={styles.desc}>LOREM fadhfk ldf adslfsd fasfaf</p>   
+             <p className={styles.desc}>{item.desc}</p>   
             </div>
+        ))}
         </div>
     </div>
   );
