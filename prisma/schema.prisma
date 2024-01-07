@@ -61,7 +61,7 @@ model Category{
   slug    String @unique 
   title   String
   img     String?
-  Posts   Post[]
+  posts   Post[]
 }
 
 model Post{
@@ -72,8 +72,9 @@ model Post{
   desc    String
   img     String?
   views   Int  @default(0)
+  cat     Category?  @relation( fields: [catSlug], references:[slug])
   catSlug String 
-  cat     Category  @relation( fields: [catSlug], references:[slug])
+  // catSlug String @unique- caused the index duplication error in mongo-prisma
   userEmail String
   user    User @relation(fields:[userEmail], references:[email])
   comments Comment[]

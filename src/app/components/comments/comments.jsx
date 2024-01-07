@@ -27,7 +27,8 @@ const Comments = ({postSlug}) => {
     console.log(data);
 
     const [desc,setDesc]  = useState("");
-    const handleSubmit = async ()=>{
+    
+    const Submit = async ()=>{
         await fetch ("/api/comments",{
             method : "POST",
             body:JSON.stringify({desc,postSlug})
@@ -40,8 +41,8 @@ const Comments = ({postSlug}) => {
         <h1 className={styles.title}>Comments</h1>
         {status==="authenticated"? (
             <div className={styles.write}>
-                <textarea placeholder='write a comment...' className={styles.input} onChange = {e=>setDesc(e.target.value)}/>
-                <button className={styles.button} onClick = {handleSubmit}>Send</button>
+                <textarea placeholder='write a comment...' className={styles.input} onChange = {(e)=>setDesc(e.target.value)}/>
+                <button className={styles.button} onClick = {Submit}>Send</button>
             </div>
         ):(
         <Link href = "/login"> Login to write</Link>
