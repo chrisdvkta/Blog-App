@@ -21,7 +21,7 @@ const getData = async (slug) => {
 const SinglePage = async ({ params }) => {
   const { slug } = params;
   const data = await getData(slug);
-  console.log(data.desc);
+  console.log(data.img);
   // const safeHTMLdescription = DOMPurify.sanitize(data?.desc); //to use dangerous inner html and preventing XSS attacks
 
   return (
@@ -35,8 +35,8 @@ const SinglePage = async ({ params }) => {
                 <Image
                   alt={data.title}
                   src={data.user.image}
-                  sizes="cover"
-                  fill
+                  width={100}
+                  height={100}
                   className={styles.avatar}
                 />
               </div>
@@ -49,7 +49,7 @@ const SinglePage = async ({ params }) => {
         </div>
         {data?.img && (
           <div className={styles.imageContainer}>
-            <Image src="/p1.jpeg" fill className={styles.image} />
+            <Image src={data.img} fill className={styles.image} />
           </div>
         )}
       </div>
