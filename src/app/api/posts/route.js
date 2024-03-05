@@ -18,13 +18,6 @@ export const GET = async (req) => {
     },
   };
 
-
-
-
-
-
-  
-  
   try {
     const [posts, count] = await prisma.$transaction([
       prisma.post.findMany(query),
@@ -34,19 +27,10 @@ export const GET = async (req) => {
   } catch (err) {
     console.log(err);
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 }),
     );
   }
 };
-
-
-
-
-
-
-
-
-
 
 // CREATE A POST
 export const POST = async (req) => {
@@ -54,7 +38,7 @@ export const POST = async (req) => {
 
   if (!session) {
     return new NextResponse(
-      JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
+      JSON.stringify({ message: "Not Authenticated!" }, { status: 401 }),
     );
   }
 
@@ -68,7 +52,7 @@ export const POST = async (req) => {
   } catch (err) {
     console.log(err);
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 }),
     );
   }
 };

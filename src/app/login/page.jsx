@@ -1,33 +1,34 @@
-"use client"
-import { useRouter } from "next/navigation"
-import styles from "./login.module.css"
-import {signIn, useSession} from "next-auth/react"
-import Link from "next/link"
+"use client";
+import { useRouter } from "next/navigation";
+import styles from "./login.module.css";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
 const LoginPage = () => {
+  //   const router = useRouter();
 
-//   const router = useRouter();
-
-//   const Status = router.data;
-//   if (Status==="authenticated"){
-//     router.push("/");
-// }
-  const {status} = useSession()
-    console.log(status);
+  //   const Status = router.data;
+  //   if (Status==="authenticated"){
+  //     router.push("/");
+  // }
+  const { status } = useSession();
+  console.log(status);
   const router = useRouter();
 
-  if (status==="authenticated"){
-    router.push("/")
+  if (status === "authenticated") {
+    router.push("/");
   }
 
   return (
     <div className={styles.container}>
-        <div className={styles.wrapper}>
-            <div className={styles.socialButton} onClick={()=>signIn("google")}>Sign in with Google</div>
-            <div className={styles.socialButton}>Sign in with Github</div>
-            <div className={styles.socialButton}>Sign in with Facebook</div>
+      <div className={styles.wrapper}>
+        <div className={styles.socialButton} onClick={() => signIn("google")}>
+          Sign in with Google
         </div>
+        <div className={styles.socialButton}>Sign in with Github</div>
+        <div className={styles.socialButton}>Sign in with Facebook</div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
