@@ -14,6 +14,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import { useSession } from "next-auth/react";
 import { app } from "@/utils/firebase";
+import slugify from "@/utils/slug";
+
 
 const WritePage = () => {
   const [file, setFile] = useState(null);
@@ -76,13 +78,14 @@ const WritePage = () => {
   }
 
   const submit = async () => {
+    const slug = slugify(title) + new Date().getSeconds()
     const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
         title,
         desc: value,
         img: media,
-        slug: title,
+        slug: slug,
         catSlug: catSlug || "new",
       }),
     });
@@ -141,7 +144,7 @@ const WritePage = () => {
           theme="bubble"
           value={value}
           onChange={setValue}
-          placeholder="Write somethin..."
+          placeholder="Write content here..."
         />
       </div>
       <button className={styles.publish} onClick={submit}>
