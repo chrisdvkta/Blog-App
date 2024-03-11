@@ -5,7 +5,6 @@ import { getAuthSession } from "@/utils/auth";
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
   const postSlug = searchParams.get("postSlug"); //pass postslug as query and search it for comments since prisma db model comment consists of postslug frield.
-
   try {
     const comments = await prisma.comment.findMany({
       where: {

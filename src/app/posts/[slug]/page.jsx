@@ -14,14 +14,13 @@ const getData = async (slug) => {
   if (!res.ok) {
     throw new Error("Failed");
   }
-
   return res.json();
 };
 
 const SinglePage = async ({ params }) => {
   const { slug } = params;
   const data = await getData(slug);
-  console.log(data.img);
+  console.log(data);
   // const safeHTMLdescription = DOMPurify.sanitize(data?.desc); //to use dangerous inner html and preventing XSS attacks
 
   return (
@@ -43,7 +42,7 @@ const SinglePage = async ({ params }) => {
             )}
             <div className={styles.userTextContainer}>
               <span className={styles.username}>{data?.user.name}</span>
-              <span className={styles.date}> - 12.07.2023</span>
+              <span className={styles.date}> {data?.createdAt}</span>
             </div>
           </div>
         </div>
