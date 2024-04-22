@@ -9,19 +9,20 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
 model Account {
-  id                 String  @id @default(cuid()) @map("_id")
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  
-  access_token       String?  
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  
-  session_state      String?
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -39,7 +40,7 @@ model Session {
 model User {
   id            String    @id @default(cuid()) @map("_id")
   name          String?
-  email         String   @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -49,43 +50,43 @@ model User {
 }
 
 model VerificationToken {
-  identifier String @id @map("_id")
+  identifier String   @id @map("_id")
   token      String   @unique
   expires    DateTime
 
   @@unique([identifier, token])
 }
 
-model Category{
-  id      String @id @default(cuid()) @map("_id")
-  slug    String @unique 
-  title   String
-  img     String?
-  posts   Post[]
+model Category {
+  id    String  @id @default(cuid()) @map("_id")
+  slug  String  @unique
+  title String
+  img   String?
+  posts Post[]
 }
 
-model Post{
-  id      String @id @default(cuid()) @map("_id")
-  createdAt  DateTime @default(now())
-  slug    String @unique 
-  title   String
-  desc    String
-  img     String?
-  views   Int  @default(0)
-  cat     Category?  @relation( fields: [catSlug], references:[slug])
-  catSlug String 
+model Post {
+  id        String    @id @default(cuid()) @map("_id")
+  createdAt DateTime  @default(now())
+  slug      String    @unique
+  title     String
+  desc      String
+  img       String?
+  views     Int       @default(0)
+  cat       Category? @relation(fields: [catSlug], references: [slug])
+  catSlug   String
   // catSlug String @unique- caused the index duplication error in mongo-prisma
   userEmail String
-  user    User @relation(fields:[userEmail], references:[email])
-  comments Comment[]
+  user      User      @relation(fields: [userEmail], references: [email])
+  comments  Comment[]
 }
 
-model Comment{
-  id        String @id @default(cuid()) @map("_id")
-  createdAt  DateTime @default(now())
-  desc        String
-  userEmail   String
-  user         User @relation(fields:[userEmail], references:[email])
-  postSlug String
-  Post        Post @relation(fields:[postSlug], references:[slug])
+model Comment {
+  id        String   @id @default(cuid()) @map("_id")
+  createdAt DateTime @default(now())
+  desc      String
+  userEmail String
+  user      User     @relation(fields: [userEmail], references: [email])
+  postSlug  String
+  Post      Post     @relation(fields: [postSlug], references: [slug])
 }

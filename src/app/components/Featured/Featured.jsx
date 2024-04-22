@@ -8,7 +8,7 @@ import prisma from "@/utils/connect";
 const getData = async ()=>{
   const res = prisma.post.findUnique(
     {where:{
-      id: `cltnatmgt000bcqawwfbu9uqf`
+      id: `clvaajdav0005oicxdofutc6j`
     }}
   )
 
@@ -25,7 +25,7 @@ const Featured = async () => {
       </h1>
       <div className={styles.post}>
         <div className={styles.imgContainer}>
-          <Image src={data.img} fill></Image>
+          <Image src={data.img} fill objectFit="cover"></Image>
         </div>
         <div className={styles.textContainer}>
           <h2 className={styles.postTitle}>{data.title}</h2>
